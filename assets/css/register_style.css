@@ -8,6 +8,9 @@ html {
     font-family: Helvetica, Arial, sans-serif;
 }
 
+a {
+    text-decoration: none;
+}
 /* header */
 #header {
     position: relative;

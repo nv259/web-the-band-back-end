@@ -84,51 +84,6 @@
     }
 ?>
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Register</title> 
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="./assets/css/register_style.css">
-        <link rel="stylesheet" href="./assets/fonts/themify-icons/themify-icons.css">
-    </head>
-
-    <body>
-        <div id="header">
-            <i class="ti-face-smile logo"></i>
-            <p class="register-line"> Register </p>
-            <a href="#" class="need-help">Need help?</a>
-        </div>
-
-        <div id="content">
-            <div class="register-wrap">
-                <div class="register-content">
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="register-form" method="post">
-                        <h2 class="sign-up"> Sign Up </h2>
-                        <p class="require-text"> 
-                            Please fill this form to create a an account 
-                            <br>
-                            <br>
-                            Username
-                        </p>
-                        <input type="text" name="name" id="" required value=""/> 
-                        <p> Password </p>
-                        <input type="password" name="password" id="" required />
-                        <p> Confirm Password </p>
-                        <input type="password" name="confirm_password" required />
-                        <button type="submit" class="submit-btn btn"> Submit </button>
-                        <button type="reset" class="reset-btn btn"> Reset </button>
-                        <p style="margin-bottom: 30px"> 
-                            <br>
-                            Already have an account? <a href="./login.php">Login here</a>.
-                        </p>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <div id="footer">
-            
-        </div>
-    </body>
-</html>
+<?php
+    include "register.html";
+?>

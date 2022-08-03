@@ -17,7 +17,7 @@
         <div id="content">
             <div class="register-wrap">
                 <div class="register-content">
-                    <form action="register.html" class="register-form" method="post">
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="register-form" method="post">
                         <h2 class="sign-up"> Sign Up </h2>
                         <p class="require-text"> 
                             Please fill this form to create a an account 
@@ -25,7 +25,7 @@
                             <br>
                             Username
                         </p>
-                        <input type="text" name="name" id="" required /> 
+                        <input type="text" name="name" id="" required value=""/> 
                         <p> Password </p>
                         <input type="password" name="password" id="" required />
                         <p> Confirm Password </p>
@@ -34,7 +34,7 @@
                         <button type="reset" class="reset-btn btn"> Reset </button>
                         <p style="margin-bottom: 30px"> 
                             <br>
-                            Already have an account? <a href="#">Login here</a>.
+                            Already have an account? <a href="./login.php">Login here</a>.
                         </p>
                     </form>
                 </div>

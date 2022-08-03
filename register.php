@@ -71,6 +71,7 @@
                 if ($stmt->execute())
                 {
                     // Redirect to login page
+                    echo "Logged in";
                     header("location: login.php");
                 } else {
                     echo "Oops! Something went wrong. Please try again later.";

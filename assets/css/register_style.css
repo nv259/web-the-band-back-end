@@ -1,0 +1,93 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+/* header */
+#header {
+    position: relative;
+    display: flex;
+    width: 100%;
+    color: #fff;
+    background-color: #000;
+    min-height: 84px;
+    align-items: center;
+}
+
+#header .logo {
+    /* display: block; */
+    margin: 0 40px;
+    font-size: 60px;
+}
+
+#header .register-line {
+    font-size: 24px;
+}
+
+#header .need-help {
+    position: absolute;
+    right: 16px;
+}
+/*  */
+#content {
+    background: url('https://images.unsplash.com/photo-1659264734760-094c73faf1f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80.jpg') top center / cover no-repeat;
+    min-height: 600px;
+    padding: 0 90px;
+}
+
+#content .register-content {
+    width: 400px;
+    float: right;
+    background-color: #fff;
+    border-radius: 12px;
+    margin-top: 60px;
+}
+
+#content .sign-up {
+    padding: 8px 30px;
+    padding-top: 30px;
+}
+
+#content p {
+    padding: 0 30px;
+    padding-top: 8px;
+}
+
+#content form input {
+    padding: 12px;
+    margin: 8px 30px;
+    width: 326px;
+}
+
+#content .btn {
+    border: none;
+    background-color: rgb(30, 104, 224);
+    color: #fff;
+    margin: 0 30px;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 8px;
+    letter-spacing: 1px;
+}
+
+#content .reset-btn.btn {
+    background-color: #aaa;
+    margin-left: -16px;
+}
+
+#content .btn:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+/*  */
+#footer {
+    background-color: rgba(51, 51, 51, 0.833);
+    min-height: 60px;
+}

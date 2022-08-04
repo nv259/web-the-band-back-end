@@ -50,6 +50,10 @@
                     <a href="profile.php" class="user-profile">
                         <i class="user-profile-icon ti-user"></i>
                     </a>
+                    <ul class="sub-nav">
+                        <li><a href="profile.php"> Your Profile </a></li>
+                        <li><a href="logout.php"> Logout </a></li>
+                    </ul>
                 </div>
 
                 <div class="search-button">

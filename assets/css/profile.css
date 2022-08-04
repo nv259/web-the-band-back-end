@@ -1,0 +1,59 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.clear {
+    clear: both;
+}
+
+/* header */
+#header {
+    position: relative;
+    display: flex;
+    width: 100%;
+    color: #fff;
+    background-color: #000;
+    min-height: 84px;
+    align-items: center;
+}
+
+#header .logo {
+    /* display: block; */
+    margin: 0 40px;
+    font-size: 60px;
+}
+
+#header .register-line {
+    font-size: 24px;
+}
+
+#header .need-help {
+    position: absolute;
+    right: 16px;
+}
+
+/* CONTENT */
+#content {
+    background-color: #eee;
+    padding-top: 20px;
+}
+
+#content #side-bar {
+    width: 25%;
+    min-height: 600px;
+    float: left;
+}
+
+#content #container {
+    background-color: #fff;
+    float: right;
+    width: 59%;
+    min-height: 600px;
+    margin-right: 170px;
+}

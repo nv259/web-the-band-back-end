@@ -46,13 +46,14 @@
                 <!-- End: Nav -->
                 
                 <!-- Begin: Nav -->
-                
-                <div class="search-button">
-                    <i class="search-icon ti-search"></i>
+                <div class="user-profile-button">
+                    <a href="profile.php" class="user-profile">
+                        <i class="user-profile-icon ti-user"></i>
+                    </a>
                 </div>
 
-                <div class="mobile-menu-btn">
-                    <i class="ti-menu menu-icon"></i>
+                <div class="search-button">
+                    <i class="search-icon ti-search"></i>
                 </div>
                 <!-- End: Nav -->
 

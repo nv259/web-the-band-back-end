@@ -249,10 +249,6 @@ html {
     cursor: pointer;
 }
 
-#footer {
-
-}
-
 #footer .banner {
     width: 100%;
 }
@@ -336,8 +332,22 @@ html {
     padding: 0 21px;
 }
 
-#header a.user-profile {
-    display: block;
+#header .user-profile-button {
+    float: right;
+    padding: 0 21px;
+}
+
+#header .user-profile-button a {
+    text-decoration: none;
+}
+
+#header .user-profile-button:hover {
+    background-color: rgb(255, 68, 0);
+}
+
+#header .user-profile-button i {
+    line-height: 46px;
+    font-size: 20px;
 }
 
 #header a.user-profile:hover {
@@ -347,10 +357,6 @@ html {
 #header .user-btn {
     display: flex;
     float: right;
-}
-
-#header .user-btn:hover {
-    background-color: rgb(255, 68, 0);
 }
 
 #header .mobile-menu-btn:hover,

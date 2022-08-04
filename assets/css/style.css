@@ -39,10 +39,6 @@ html {
     position: relative;
 }
 
-#content {
-
-}
-
 #content .content-section {
     width: 800px;
     max-width: 100%;
@@ -338,6 +334,23 @@ html {
 #header .search-button .search-icon {
     line-height: 46px;
     padding: 0 21px;
+}
+
+#header a.user-profile {
+    display: block;
+}
+
+#header a.user-profile:hover {
+    background-color: rgb(255, 68, 0);
+}
+
+#header .user-btn {
+    display: flex;
+    float: right;
+}
+
+#header .user-btn:hover {
+    background-color: rgb(255, 68, 0);
 }
 
 #header .mobile-menu-btn:hover,

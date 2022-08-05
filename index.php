@@ -170,8 +170,8 @@
     
                         <div class="user-info"> 
                             <form action="">
-                                <input type="text" class="contact-name" placeholder="Name" required />
-                                <input type="email" class="contact-email" placeholder="Email" required />
+                                <input type="text" class="contact-name" placeholder="Name" required value="<?php echo trim($_GET["name"]) ?>" />
+                                <input type="email" class="contact-email" placeholder="Email" required value="<?php echo trim($_GET["email"]) ?>" />
                                 <input type="text" class="contact-message" placeholder="Message" required /> 
                                 
                                 <button type="submit" class="send-button"> SEND </button>

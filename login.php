@@ -20,7 +20,7 @@
         $username = trim($_POST["username"]);
         $password = trim($_POST["password"]);
 
-        $query = "SELECT user_id, username, password FROM Account WHERE username = ?";
+        $query = "SELECT Account.user_id, username, password, email FROM Account JOIN UserInfo  ON Account.user_id = UserInfo.user_id WHERE Account.username = ?";
         
         if ($stmt = $mysqli->prepare($query))
         {
@@ -40,7 +40,7 @@
                 {
                     // echo "\nusername exist";
 
-                    $stmt->bind_result($id, $username, $hashed_password);
+                    $stmt->bind_result($id, $username, $hashed_password, $email);
                     if ($stmt->fetch())
                     {
                         if (password_verify($password, $hashed_password)) 
@@ -51,7 +51,7 @@
                             $_SESSION["id"] = $id;
                             $_SESSION["username"] = $username;
 
-                            header("location: index.php");
+                            header("location: index.php?name=$username&email=$email");
                         }   
                         else {
                             echo "Password_verify doesn't work.";

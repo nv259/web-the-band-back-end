@@ -34,6 +34,7 @@
                 {
                     // this username is already taken
                     $username_error = "This username is already taken.";
+                    echo "<script type='text/javascript'>alert('$username_error');</script>";
                 }
                 else {
                     $username = trim($_POST["username"]);
@@ -48,37 +49,24 @@
         if (strlen(trim($_POST["password"])) < 6)
         {
             $password_error = "Password must have at least 6 characters.";
+            echo "<script type='text/javascript'>alert('$password_error');</script>";
         }
         else $password = trim($_POST["password"]);
 
         // Validate confirm password 
         $confirm_password = trim($_POST["confirm_password"]);
         if ($password != $confirm_password)
+        {
             $confirm_password_error = "Password did not match.";
+            echo "<script type='text/javascript'>alert('$confirm_password_error');</script>";
+        }
 
         // Insert into database
         if (empty($username_error) && empty($password_error) && empty($confirm_password_error))
         {
-            $query = "INSERT INTO Account (username, password) VALUES (?, ?)";
-            
-            if ($stmt = $mysqli->prepare($query))
-            {
-                $stmt->bind_param("ss", $param_username, $param_password);
-
-                $param_username = $username;
-                $param_password = password_hash($password, PASSWORD_DEFAULT);
-
-                if ($stmt->execute())
-                {
-                    // Redirect to login page
-                    echo "Logged in";
-                    header("location: login.php");
-                } else {
-                    echo "Oops! Something went wrong. Please try again later.";
-                }
-
-                $stmt->close();
-            }
+            include_once "./DAL/DAO/register/create_Account.php";
+            include_once "./DAL/DAO/register/get_user_id.php";
+            include_once "./DAL/DAO/register/create_space_for_user_info.php";
         }
 
         $mysqli->close();

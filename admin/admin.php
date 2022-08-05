@@ -4,8 +4,8 @@
         <title> Admin </title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../assets/css/admin_style.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../assets/css/admin_style.css">
     </head>
 
     <body>
@@ -23,75 +23,75 @@
                 <?php
                     require_once "../config/config.php";
 
-                    $query = "SELECT username, name, email, phone, role FROM Account INNER JOIN UserInfo ON Account.user_id = UserInfo.user_id";
+                    $query = "SELECT Account.user_id, username, name, email, phone, role FROM Account INNER JOIN UserInfo ON Account.user_id = UserInfo.user_id";
+                    if ($result = $mysqli->query($query)) 
+                    {
+                        if ($result->num_rows > 0)
+                        {
+                            echo '<table class="table table-hover">';
+                                echo '<thead style="background-color: black; color: white; font-style: bold;">';
+                                    echo '<tr>';
+                                        echo '<th>Index</th>';
+                                        echo '<th>Username</th>';
+                                        echo '<th>Name</th>';
+                                        echo '<th>Email</th>';
+                                        echo '<th>Phone</th>';
+                                        echo '<th>Role</th>';
+                                        echo '<th>Operations</th>';
+                                    echo '</tr>';
+                                echo '</thead>';
+
+                                echo '<tbody>';
+                                $i = 1;
+                                while ($row = $result->fetch_array())
+                                {
+                                    echo "<tr>";
+                                        echo "<td>" . $i . "</td>";
+                                        echo "<td>" . $row['username'] . "</td>";
+                                        echo "<td>" . $row['name'] . "</td>";
+                                        echo "<td>" . $row['email'] . "</td>";
+                                        echo "<td>" . $row['phone'] . "</td>";
+                                        switch ($row['role'])
+                                        {
+                                            case -1: 
+                                                echo "<td> Staff </td>";
+                                                break;
+                                            case 0;
+                                                echo "<td> User </td>";
+                                                break;
+                                            case 1:
+                                                echo "<td> Admin </td>";
+                                                break;
+                                            default:
+                                                echo "<td> darfur role?? </td>";
+                                                break;
+                                        }
+                                        echo "<td>";
+                                            echo '<a class="btn btn-success" id="reset-btn" href="reset.php?id=' . $row['user_id'] .'"> Reset </a>';
+                                            echo '<a class="btn btn-danger" id="delete-btn" href="delete.php?id=' . $row['user_id'] .'" style="margin-left: 4px;"> Delete </a>';
+                                        echo "</td>";
+                                    echo "</tr>";
+
+                                    $i++;
+                                }
+                                echo "</tbody>";
+                            echo "</table>";
+                            // Free result set
+                            $result->free();
+                        } else {
+                            echo '<div class="alert alert-danger"><em?>No records were found.</em></div>';
+                        }
+                    } else {
+                        echo "Oops! Something went wrong. Please try again later.";
+                    }
+
+                    $mysqli->close();
                 ?>
-                <table class="table table-hover">
-                    <thead style="background-color: black; color: white; font-style: bold;">
-                        <tr>
-                            <th>Username</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Role</th>
-                            <th>Operations</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr>
-                            <td>Admin</td>
-                            <td>Nguyễn Việt Nhật</td>
-                            <td>nguyenvietnhat.03@gmail.com</td>
-                            <td>0362 272 805</td>
-                            <td>Admin</td>
-                            <td>
-                                <button:button class="btn btn-success">Reset</button:button>
-                                <button:button class="btn btn-danger">Delete</button:button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Admin</td>
-                            <td>Nguyễn Việt Nhật</td>
-                            <td>nguyenvietnhat.03@gmail.com</td>
-                            <td>0362 272 805</td>
-                            <td>Admin</td>
-                            <td>
-                                <button:button class="btn btn-success">Reset</button:button>
-                                <button:button class="btn btn-danger">Delete</button:button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Admin</td>
-                            <td>Nguyễn Việt Nhật</td>
-                            <td>nguyenvietnhat.03@gmail.com</td>
-                            <td>0362 272 805</td>
-                            <td>Admin</td>
-                            <td>
-                                <button:button class="btn btn-success">Reset</button:button>
-                                <button:button class="btn btn-danger">Delete</button:button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Admin</td>
-                            <td>Nguyễn Việt Nhật</td>
-                            <td>nguyenvietnhat.03@gmail.com</td>
-                            <td>0362 272 805</td>
-                            <td>Admin</td>
-                            <td>
-                                <button:button class="btn btn-success">Reset</button:button>
-                                <button:button class="btn btn-danger">Delete</button:button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
 
         <div id="footer">
-            <h2> Number of Accounts: 4 </h2>
+            <h2> Number of Accounts: <?php echo $i-1 ?> </h2>
         </div>
 
         <!-- <div class="modal js-modal"> -->
@@ -103,7 +103,7 @@
 
                     <form action="admin.php" method="post">
                         <div class="form-group">
-                            <label for="username">Username:</label>
+                            <label for="username">Username: <i style="color: red;">*</i> </label>
                             <input type="text" class="form-control" name="username" id="username" placeholder="Enter name" required />
                         </div>
 

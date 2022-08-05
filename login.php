@@ -12,24 +12,24 @@
     require_once "./config/config.php";
     require_once "./helpers/format.php";
 
-    $name = $password = "";
-    $name_error = $password_error = $login_error = "";
+    $username = $password = "";
+    $username_error = $password_error = $login_error = "";
 
     if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
-        $name = trim($_POST["name"]);
+        $username = trim($_POST["username"]);
         $password = trim($_POST["password"]);
 
-        $query = "SELECT user_id, name, password FROM Account WHERE name = ?";
+        $query = "SELECT user_id, username, password FROM Account WHERE username = ?";
         
         if ($stmt = $mysqli->prepare($query))
         {
-            // echo "got user_id, name, password\n";
+            // echo "got user_id, username, password\n";
 
-            $stmt->bind_param("s", $param_name);
+            $stmt->bind_param("s", $param_username);
 
-            $param_name = $name;
-            // echo $name;
+            $param_username = $username;
+            // echo $username;
             // echo $password;
 
             if ($stmt->execute())
@@ -40,7 +40,7 @@
                 {
                     // echo "\nusername exist";
 
-                    $stmt->bind_result($id, $name, $hashed_password);
+                    $stmt->bind_result($id, $username, $hashed_password);
                     if ($stmt->fetch())
                     {
                         if (password_verify($password, $hashed_password)) 
@@ -49,7 +49,7 @@
 
                             $_SESSION["loggedin"] = true;
                             $_SESSION["id"] = $id;
-                            $_SESSION["name"] = $name;
+                            $_SESSION["username"] = $username;
 
                             header("location: index.php");
                         }   

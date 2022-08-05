@@ -7,8 +7,8 @@
     // Create instance variable to format username 
     $instance = new Format();
 
-    $name = $password = $confirm_password = "";
-    $name_error = $password_error = $confirm_password_error = "";
+    $username = $password = $confirm_password = "";
+    $username_error = $password_error = $confirm_password_error = "";
 
     // Validate Username
     if ($_SERVER["REQUEST_METHOD"] == "POST") 
@@ -16,14 +16,14 @@
         // echo "Still worked";
         // echo htmlspecialchars($_SERVER["PHP_SELF"]);
 
-        $query = "SELECT user_id FROM Account WHERE name = ?";
+        $query = "SELECT user_id FROM Account WHERE username = ?";
 
         if ($stmt = $mysqli->prepare($query))
         {
-            $stmt->bind_param("s", $param_name);
+            $stmt->bind_param("s", $param_username);
             
             // Set parameter
-            $param_name = $instance->validation($_POST["name"]);
+            $param_username = $instance->validation($_POST["username"]);
 
             if ($stmt->execute())
             {
@@ -33,10 +33,10 @@
                 if ($stmt->num_rows() == 1)
                 {
                     // this username is already taken
-                    $name_error = "This username is already taken.";
+                    $username_error = "This username is already taken.";
                 }
                 else {
-                    $name = trim($_POST["name"]);
+                    $username = trim($_POST["username"]);
                 }
             }
             else echo "Oops! Something went wrong. Please try again later.";
@@ -57,15 +57,15 @@
             $confirm_password_error = "Password did not match.";
 
         // Insert into database
-        if (empty($name_error) && empty($password_error) && empty($confirm_password_error))
+        if (empty($username_error) && empty($password_error) && empty($confirm_password_error))
         {
-            $query = "INSERT INTO Account (name, password) VALUES (?, ?)";
+            $query = "INSERT INTO Account (username, password) VALUES (?, ?)";
             
             if ($stmt = $mysqli->prepare($query))
             {
-                $stmt->bind_param("ss", $param_name, $param_password);
+                $stmt->bind_param("ss", $param_username, $param_password);
 
-                $param_name = $name;
+                $param_username = $username;
                 $param_password = password_hash($password, PASSWORD_DEFAULT);
 
                 if ($stmt->execute())

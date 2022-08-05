@@ -5,6 +5,29 @@
     list-style-type: none;
 }
 
+html {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
 .admin-content ul a {
     text-decoration: none;
+}
+
+h1 {
+    text-align: center;
+}
+
+#main {
+    margin: 0px 80px;
+    margin-top: 60px;
+}
+
+#main .account-table {
+    margin-top: 40px;
+}
+
+#footer > h2 {
+    display: flex;
+    float: right;
+    margin-right: 16px;
 }

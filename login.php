@@ -54,7 +54,7 @@
                             header("location: index.php?name=$username&email=$email");
                         }   
                         else {
-                            echo "Password_verify doesn't work.";
+                            // echo "Password_verify doesn't work.";
                             $login_error = "Invalid username or password.";
                         }
                     }

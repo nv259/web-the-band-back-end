@@ -20,7 +20,7 @@
         $username = trim($_POST["username"]);
         $password = trim($_POST["password"]);
 
-        $query = "SELECT Account.user_id, username, password, email FROM Account JOIN UserInfo  ON Account.user_id = UserInfo.user_id WHERE Account.username = ?";
+        $query = "SELECT Account.user_id, username, name, phone, password, email, create_at, role FROM Account JOIN UserInfo  ON Account.user_id = UserInfo.user_id WHERE Account.username = ?";
         
         if ($stmt = $mysqli->prepare($query))
         {
@@ -40,16 +40,21 @@
                 {
                     // echo "\nusername exist";
 
-                    $stmt->bind_result($id, $username, $hashed_password, $email);
+                    $stmt->bind_result($id, $username, $name, $phone, $hashed_password, $email, $create_at, $role);
                     if ($stmt->fetch())
                     {
                         if (password_verify($password, $hashed_password)) 
                         {
                             session_start();
-
+                            
                             $_SESSION["loggedin"] = true;
                             $_SESSION["id"] = $id;
                             $_SESSION["username"] = $username;
+                            $_SESSION["email"] = $email;
+                            $_SESSION["name"] = $name;
+                            $_SESSION["phone"] = $phone;
+                            $_SESSION["create_at"] = $create_at;
+                            $_SESSION["role"] = $role;
 
                             header("location: index.php?name=$username&email=$email");
                         }   

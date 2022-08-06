@@ -47,11 +47,11 @@
                 
                 <!-- Begin: Nav -->
                 <div class="user-profile-button">
-                    <a href="profile.php" class="user-profile">
+                    <a href="user/profile.php" class="user-profile">
                         <i class="user-profile-icon ti-user"></i>
                     </a>
                     <ul class="sub-nav">
-                        <li><a href="profile.php"> Your Profile </a></li>
+                        <li><a href="user/profile.php"> Your Profile </a></li>
                         <li><a href="logout.php"> Logout </a></li>
                     </ul>
                 </div>
@@ -236,6 +236,7 @@
         </div>
         
         <script>    
+            const variable = 1;
             const buyBtns = document.querySelectorAll('.js-buy-ticket');
             const modal = document.querySelector('.js-modal');
             const closeBtn = document.querySelector('.js-modal-close');

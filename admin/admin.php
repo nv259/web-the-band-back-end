@@ -1,3 +1,72 @@
+<?php
+    session_start();
+
+    if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] === false || $_SESSION["role"] != 1)
+    {
+        header("location: ../login.php");
+        exit();
+    }
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST")
+    {
+        $username = trim($_POST["username"]);
+        $email = trim($_POST["email"]);
+        $phone = trim($_POST["phone"]);
+        $role = trim($_POST["role"]);
+        $username_error = "";
+
+        require_once "../config/config.php";
+        require_once "../DAL/DAO/register/check_username.php";
+
+        if (empty($username_error))    
+        {
+            $query = "INSERT INTO Account (username, password, role) VALUES ( ? , ? , ? ) ";
+
+            if ($stmt = $mysqli->prepare($query))
+            {
+                $stmt->bind_param("ssi", $param_username, $param_password, $param_role);
+
+                $param_username = $username;
+                $param_password = password_hash("uit@123", PASSWORD_DEFAULT);
+                switch ($role) 
+                {
+                    case "Staff":
+                        $param_role = -1;
+                        break;
+                    case "User":
+                        $param_role = 0;
+                        break;
+                    case "Admin":
+                        $param_role = 1;
+                        break;
+                }
+
+                if ($stmt->execute())
+                {
+                    // INSERT UserInfo dbo
+                    require_once "../DAL/DAO/register/get_user_id.php";
+                    $query = "INSERT INTO UserInfo (user_id, email, phone) VALUES ( ? , ? , ? )";
+
+                    if ($sub_stmt = $mysqli->prepare($query))
+                    {
+                        $sub_stmt->bind_param("iss", $user_id, $email, $phone);
+
+                        $sub_stmt->execute();
+
+                        $sub_stmt->close();
+                    }
+                } else {
+                    echo "<script type='text/javascript'>alert('Oops! Something went wrong. Please try again later.');</script>";
+                }
+
+                $stmt->close();
+            }
+
+            // $mysqli->close(); So.....When will it close? I dunno
+        }
+    }
+?>  
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -85,7 +154,7 @@
                         echo "Oops! Something went wrong. Please try again later.";
                     }
 
-                    $mysqli->close();
+                    $mysqli->close(); // Maybe it will close here... Maybe...
                 ?>
             </div>
         </div>
@@ -109,12 +178,12 @@
 
                         <div class="form-group">
                             <label for="email">Email:</label>
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" />
+                            <input type="email" class="form-control" name="email" id="email" value="default@gmail.com" placeholder="Enter email" />
                         </div>
 
                         <div class="form-group">
                             <label for="phone">Phone:</label>
-                            <input type="text" class="form-control" name="phone" id="phone" placeholder="Enter phone" />
+                            <input type="text" class="form-control" name="phone" id="phone" value="default" placeholder="Enter phone" />
                         </div>
 
                         <div class="form-group">
@@ -127,7 +196,8 @@
                         </div>
 
                         <input type="reset" name="closeBtn" value="Close" class="close-btn btn btn-danger js-modal-operations-btn" style="float:right; margin-left: 8px;" />    
-                        <input type="submit" name="createBtn" value="Create" class="create-btn btn btn-primary js-modal-operations-btn" style="float:right; " />    
+                        <input type="submit" name="createBtn" value="Create" class="create-btn btn btn-primary" style="float:right; " />  
+                           <!-- js-modal-operations-btn -->
                     </form>
                 </div>
             </div>

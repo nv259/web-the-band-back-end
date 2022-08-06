@@ -6,7 +6,7 @@
         $stmt->bind_param("s", $param_username);
         
         // Set parameter
-        $param_username = $instance->validation($_POST["username"]);
+        $param_username = trim($_POST["username"]);
 
         if ($stmt->execute())
         {

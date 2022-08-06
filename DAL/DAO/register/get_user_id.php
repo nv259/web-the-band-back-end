@@ -1,19 +1,19 @@
 <?php
     $query = "SELECT user_id FROM Account WHERE username = ?";
 
-    if ($stmt = $mysqli->prepare($query))
+    if ($gui_stmt = $mysqli->prepare($query))
     {
-        $stmt->bind_param("s", $username);
+        $gui_stmt->bind_param("s", $username);
 
-        if ($stmt->execute())
+        if ($gui_stmt->execute())
         {
             // Success
-            $stmt->bind_result($user_id);
-            $stmt->fetch();
+            $gui_stmt->bind_result($user_id);
+            $gui_stmt->fetch();
         } else {
             echo "Oops! Something went wrong. Please try again later.";
         }
 
-        $stmt->close();
+        $gui_stmt->close();
     }
 ?>

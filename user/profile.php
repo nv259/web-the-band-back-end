@@ -3,8 +3,48 @@
     
     if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] === false)
     {
-        header("location: login.php");
+        header("location: ../login.php");
         exit();
+    }
+
+    require_once "../config/config.php";
+    require_once "../helpers/format.php";
+
+    $name = $email = $phone = "";
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST")
+    {
+        $name = trim($_POST["name"]);
+        $email = trim($_POST["email"]);
+        $phone = trim($_POST["phone"]);
+
+        $query = "UPDATE UserInfo SET name = ? , email = ? , phone = ? WHERE user_id = ?";
+
+        if ($stmt = $mysqli->prepare($query))
+        {
+            $stmt->bind_param("sssi", $param_name, $param_email, $param_phone, $param_user_id);
+
+            $param_name = $name;
+            $param_email = $email;
+            $param_phone = $phone;
+            $param_user_id = $_SESSION["id"];
+
+            if ($stmt->execute())
+            {
+                // Success
+                $_SESSION["name"] = $param_name;
+                $_SESSION["email"] = $param_email;
+                $_SESSION["phone"] = $param_phone;
+            } else {
+                echo "Oops! Something went wrong. Please try again later.";
+            }
+
+            $stmt->close();
+        } else {
+            echo "Oops! Something went wrong. Please try again later.";
+        }
+
+        $mysqli->close();
     }
 ?>
 
@@ -70,7 +110,7 @@
                 <hr>
 
                 <div class="">
-                    <form action="profile.php" method="post" style="margin-top: 32px">
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" style="margin-top: 32px">
                         <div class="username row"> 
                             <div class="left">Username</div>
                             <div class="right">
@@ -124,8 +164,9 @@
                         </div>
     
                         <div class="operations row">
-                            <a href="user_update.php?username=admin" class="btn btn-success" style="margin:0 16px 0 84px">Save</a>
-                            <a href="user_reset_password.php?username=admin" class="btn btn-danger">Reset password</a>
+                            <!-- <a href="user_update.php?username=admin" class="btn btn-success" style="margin:0 16px 0 84px">Save</a> -->
+                            <button type="submit" class="btn btn-success" style="margin:0 16px 0 84px"> Save </button>
+                            <a href="reset_password.php" class="btn btn-danger">Reset password</a>
                         </div>
                     </form>
                 </div>

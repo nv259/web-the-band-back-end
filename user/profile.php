@@ -28,7 +28,7 @@
     <body>
         <div id="header">
             <i class="ti-face-smile logo"></i>
-            <p class="register-line"> User profile </p>
+            <p class="register-line"> <?php echo $_SESSION["username"]; ?> </p>
             <a href="#" class="need-help">Need help?</a>
         </div>
 

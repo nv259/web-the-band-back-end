@@ -1,11 +1,5 @@
 <?php
-    session_start();
-
-    if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] === false)
-    {
-        header("location: login.php");
-        exit;
-    }
+    require_once "./DAL/check_loggedin.php";
 ?>
 
 <!DOCTYPE html>

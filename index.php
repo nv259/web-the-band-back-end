@@ -1,6 +1,33 @@
 <?php
     require_once "./DAL/check_loggedin.php";
+    require_once "./config/config.php";
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST")
+    {   
+        $query = "INSERT INTO cart (customer_id, ticket_id) VALUES( ? , ? ) ON DUPLICATE KEY UPDATE amount = amount + ?";
+
+        if ($stmt = $mysqli->prepare($query))
+        {
+            $stmt->bind_param("iii", $param_customer_id, $param_ticket_id, $param_amount);
+
+            $param_customer_id = $_SESSION["id"];
+            $param_ticket_id = $_POST["ticket_id"];
+            $param_amount = $_POST["quantity"];
+            
+            $stmt->execute();
+
+            $stmt->close();
+        }
+
+        // $mysqli->close();
+    }
 ?>
+
+<script>
+    function change_value_by_id(ticket_id) {
+        document.getElementById("ticket_id").value = ticket_id;
+    }
+</script>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -110,7 +137,7 @@
                                     <h3 class="place-heading"> New York</h3>
                                     <p class="place-time">Fri 27 Nov 2016 </p>
                                     <p class="place-description"> Praesent tincidunt sed tellus ut rutrum sed vitae justo.</p>
-                                    <button class="buy-button js-buy-ticket"> Buy Tickets</button>
+                                    <button class="buy-button js-buy-ticket" name="newyork-buy-btn" value="1" onclick="change_value_by_id(1)"> Buy Tickets</button>
                                 </div>
                             </div>
 
@@ -120,17 +147,17 @@
                                     <h3 class="place-heading"> Paris</h3>
                                     <p class="place-time"> Sat 28 Nov 2016</p>
                                     <p class="place-description">Praesent tincidunt sed tellus ut rutrum sed vitae justo. </p>
-                                    <button class="buy-button js-buy-ticket"> Buy Tickets</button>
+                                    <button class="buy-button js-buy-ticket" name="paris-buy-btn" value="2" onclick="change_value_by_id(2)"> Buy Tickets</button>
                                 </div>
                             </div>
 
                             <div class="place-item">
-                                <img src="./assets/img/places/sanfran.jpg" alt="newyork" class="place-img">
+                                <img src="./assets/img/places/sanfran.jpg" alt="sanfran" class="place-img">
                                 <div class="place-content">
                                     <h3 class="place-heading"> San Francisco</h3>
                                     <p class="place-time"> Sun 29 Nov 2016 </p>
                                     <p class="place-description"> Praesent tincidunt sed tellus ut rutrum sed vitae justo.</p>
-                                    <button class="buy-button js-buy-ticket"> Buy Tickets</button>
+                                    <button class="buy-button js-buy-ticket" name="sanfran-buy-btn" value="3" onclick="change_value_by_id(3)"> Buy Tickets</button>
                                 </div>
                             </div>
 
@@ -164,8 +191,8 @@
     
                         <div class="user-info"> 
                             <form action="">
-                                <input type="text" class="contact-name" placeholder="Name" required value="<?php echo trim($_GET["name"]) ?>" />
-                                <input type="email" class="contact-email" placeholder="Email" required value="<?php echo trim($_GET["email"]) ?>" />
+                                <input type="text" class="contact-name" placeholder="Name" required value="<?php echo $_SESSION["name"] ?>" />
+                                <input type="email" class="contact-email" placeholder="Email" required value="<?php echo $_SESSION["email"] ?>" />
                                 <input type="text" class="contact-message" placeholder="Message" required /> 
                                 
                                 <button type="submit" class="send-button"> SEND </button>
@@ -199,28 +226,32 @@
                     <i class="ti-close"></i>
                 </div>
 
-                <header class="modal-header">
+                <header class="modal-header" style="align-items: center; justify-content: center;">
                     <i class="ti-bag"></i>
                     Tickets
                 </header>
 
                 <div class="modal-body">
-                    <label for="quantity" class="modal-label">
-                        <i class="ti-shopping-cart"></i>
-                        Tickets, $15 per person
-                    </label>
-                    <input id="quantity" type="text" class="modal-input" placeholder="How many?">
-                
-                    <label for="user" class="modal-label">
-                        <i class="ti-user"></i>
-                        Send to
-                    </label>
-                    <input id="user" type="text" class="modal-input" placeholder="Enter email...">
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                        <input id="ticket_id" type="number" class="modal-input hidden" name="ticket_id" value="1" />
 
-                    <button id="buy-tickets">
-                        Pay
-                        <i class="ti-check"></i>
-                    </button>
+                        <label for="quantity" class="modal-label">
+                            <i class="ti-shopping-cart"></i>
+                            Tickets, $15 per person
+                        </label>
+                        <input id="quantity" type="number" class="modal-input" name="quantity" placeholder="How many?">
+                    
+                        <label for="user" class="modal-label">
+                            <i class="ti-user"></i>
+                            Send to
+                        </label>
+                        <input id="user" type="text" class="modal-input" name="email" value="<?php echo $_SESSION["email"]?>" placeholder="Enter email...">
+
+                        <button id="buy-tickets" type="submit">
+                            Pay
+                            <i class="ti-check"></i>
+                        </button>
+                    </form>
                 </div>
 
                 <footer class="modal-footer">
@@ -238,6 +269,7 @@
 
             function showBuyTickets() {
                 modal.classList.add('open');
+                // document.getElementById('ticket_id').value = _buyBtn.value;
             }           
 
             function hideBuyTickets() {
@@ -245,6 +277,7 @@
             }
 
             // open modal 
+            let i = 0;
             for (const buyBtn of buyBtns)
                 buyBtn.addEventListener('click', showBuyTickets);
 
@@ -252,6 +285,8 @@
             closeBtn.addEventListener('click', hideBuyTickets);
             modal.addEventListener('click', hideBuyTickets);
             modalContainer.addEventListener('click', function(event) { event.stopPropagation() });
+
+
         </script>
     </body>
 </html>

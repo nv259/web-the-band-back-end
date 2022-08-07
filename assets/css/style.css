@@ -17,6 +17,10 @@ html {
     clear: both;
 }
 
+.hidden {
+    display: none !important;
+}
+
 #main {
     min-height: 2000px;
 }
